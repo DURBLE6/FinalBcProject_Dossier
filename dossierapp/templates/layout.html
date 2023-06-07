@@ -1,0 +1,155 @@
+
+<!doctype html>
+<html lang="eng">
+
+<head>
+	
+	<title>Dossier - Staff Login</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/js/all.min.js')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/animate.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/carousel.css')}}">
+	<style type="text/css">
+@media only screen and (min-width: 768px) {
+  body {
+    background-image: url("{{ url_for('static', filename='images/homepage.jpeg') }}");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+	body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+	display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+	z-index: -2;
+  }
+}
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
+
+	/* body{
+		background-color: white;
+		font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-size: 16px;
+	} */
+	a:hover{
+		background-color: rgb(10, 10, 160);
+		
+	}
+	img{
+		 max-width:102%; 
+		max-height:auto;
+}
+
+	.navbar{
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+	</style>
+
+</head>
+<body>
+<header>
+<div class="container-fluid">
+<div class="row">
+<nav class="navbar navbar-expand-md" style="background-color: rgb(4, 4, 121);">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-white" href="/">DOSSIER</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+			{% if session['staff']: %}
+          	<a class="nav-link active text-white" aria-current="page" href="/staffdashboard">DASHBORD</a>
+			{% else: %}
+			<a class="nav-link active text-white" aria-current="page" href="#" onclick="return alert('please login to go to the dashboard')">DASHBORD</a>
+			{% endif %}
+        </li>
+        <li class="nav-item">
+			{% if session['staff']: %}
+          	<a class="nav-link text-white" href="/report">REPORT</a>
+			{% else: %}
+			<a class="nav-link text-white" href="#" onclick="return alert('you need to be logged in to make a report')">REPORT</a>
+			{% endif %}
+        </li>
+        <li class="nav-item">
+        </li>
+      </ul>
+      <form class="" role="search">
+       {% block logout %} <a class="btn btn-outline-primary d-flex text-white" href="/stafflogout">Sign out</a>{% endblock %}
+      </form>
+    </div>
+  </div>
+</nav>
+</div>
+</div>
+</header>
+<main>
+<div class="container-fluid mt-5">
+	<div class="row pt-5 justify-content-center">
+		<div class="col-md-9 p-5 rounded-2" style="background-color: rgb(235, 235, 235);">
+				{% block staffreg%}
+		<div class="row">
+					{% block stafflogin%} {% block adminlogin%} 
+			<div class="col-md rounded-2 text-center pt-4" style="overflow: scroll; background-color: rgb(224, 224, 224); height: 380px;">
+				<p><b> GREETINGS FROM DOSSIER TEAM </b></p><hr>
+				<P>Speech is necessary for learning, interacting with others and for people to develop. Speech begins at an early age and it develops as a person ages. There are different elements the endSpeech is necessary for learning, interacting with others and for people to develop. Speech begins at an early age and it develops as a person ages. There are different elements th.</P>
+				<form method="post" action="">
+				<p><span><b>Login as: </b></span><select class="text-start" name="home" style="width: 158px; height: 32px;">
+					<option ></option>
+				</select>
+				<button type="submit" class="mt-3 offset rounded-2" style="background-color: rgb(4, 4, 121); color: white;">continue</button>
+				</form></p>
+				<small>Please register <b><a style="font-style: italic; text-decoration: none;" href="/staffregistration" >HERE</a></b> if you don't have an accout yet. Note that this is mandatory for all the staffs </small>
+			</div>
+			<div class="col-md rounded-2 d-flex align-items-center" style="background-color: rgb(224, 224, 224); height: 380px;">
+				<img src="{{url_for('static',filename = '/images/homepage.jpeg')}}">
+			</div>
+			{% endblock%} {% endblock %}
+		</div>
+			{% endblock %} 
+			</div>
+		</div>
+	</div>
+</main>
+<div class="row mt-5" >
+<footer class="footer mt-auto py-3 bg-dark text-center" style="position: fixed; left: 0px; bottom: 0px;">
+<div class="container">
+<span class="text-white"> DOSSIER | SevenLives Inc. &copy;2022</span>
+	</div>
+</footer>	
+
+<!--<script src = "main.js" type="text/javascript"></script>-->
+
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="eng">
+
+<head>
+	
+	<title>Sign Up - Dossier</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/js/all.min.js')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/animate.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/carousel.css')}}">
+	<style type="text/css">
+
+@media only screen and (min-width: 768px) {
+  body {
+    background-image: url("{{ url_for('static', filename='images/homepage.jpeg') }}");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+	body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+	bottom: 0;
+	margin: auto;
+	display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+	z-index: -3;
+  }
+
+}	
+	.navbar{
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+
+	a:hover{
+		background-color: rgb(10, 10, 160);
+		
+	}
+	img{
+		 max-width:102%; 
+		max-height:auto;
+}
+	</style>
+
+</head>
+<body>
+<header>
+<div class="container-fluid">
+<div class="row">
+<nav class="navbar navbar-expand-md nav" style="background-color: rgb(4, 4, 121);">
+  <div class="container-fluid">
+    	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      		<span class="navbar-toggler-icon"></span>
+    	</button>
+    <a class="navbar-brand text-white" href="/">DOSSIER</a>
+    	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        		<li class="nav-item text-white">
+          			Staff Registration Area
+        		</li>
+      		</ul>
+      		<form class="">
+    			<a class="btn btn-outline-primary text-white" href="/stafflogin">Back to login</a>
+      		</form>
+    		</div>
+  		</div>
+	</nav>
+</div>
+</header>
+<main>
+	<div class="container-fluid mt-5">
+		<div class="row pt-5 d-flex justify-content-center">
+			<div class="col-md-6 p-5 rounded-2" style="background-color: rgb(4, 4, 121); color: white;">
+				<form method="post" action="">
+				<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
+						{% with msg = get_flashed_messages(with_categories = True) %}
+							{% if msg: %} {% for cat,m in msg: %}
+							{% if cat == 'error': %} <div class="badge bg-danger mb-4 text-center">{{ m|safe}}</div>
+							{% elif cat == 'success': %} <div class="badge bg-success mb-4  text-center">{{ m|safe}}</div>
+							{% else: %} <div class="badge bg-warning mb-4  text-center">{{ m|safe}}</div>
+							{% endif %} {% endfor %}
+							{% endif %} {% endwith %}
+						<h5 class="text-center">Please complete all the fields to register</h5>
+							<label>Email</label>
+							<div class="col-md mb-2">
+								<input type="email" id="" name="email" class="form-control" placeholder="info@example.com">	
+							</div>
+							<label >Full Name</label>
+							<div class="col-md mb-2">
+								<input type="text" id="" name="fullname" class="form-control">
+							</div>
+							<div class="row mb-2">
+								<div class="col-md-6">
+									<label>Set password</label>
+									<input type="password" id="" name="pwd" placeholder="at least 8 character including (A-Z,a-z,0-9)" class="form-control">
+								</div>
+								<div class="col-md-6">
+									<label>Confirm password</label>
+									<input type="password" id="" name="pwd2" class="form-control">
+								</div>
+							</div>
+							<label>Phone</label>
+							<div class="col-md mb-2">
+								<input type="text" id="" name="phone" class="form-control" placeholder="(e.g 080123456789)">
+							</div>
+							<div class="row mb-2">
+								<div class="col-md-6">
+									<label>Office: </label>
+									<select id="" name="office" class="form-control">
+										<option selected>select office</option>
+										{% for o in offices: %}
+										<option value="{{o.office_id}}">{{o.office_name}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="col-md-6">
+								<label>Department: </label>
+								<select id="" name="depts" class="form-control">
+									<option selected>select department</option>	
+									{% for d in depts: %}				
+									<option value="{{d.dept_id}}">{{d.dept_name}}</option>
+									{% endfor %}
+								</select>
+								</div>
+							</div>
+							<div class="col-md mt-3">
+								<button type="submit" id="" class="btn btn-primary offset-5">Register</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</main>
+<div class="row mt-5" >
+<footer class="footer mt-auto py-3 bg-dark text-center" style="position: fixed; left: 0px; bottom: 0px;">
+<div class="container">
+<span class="text-white">DOSSIER | SevenLives Inc. &copy;2022</span>
+	</div>
+</footer>	
+
+<!--<script src = "main.js" type="text/javascript"></script>-->
+<script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" language="javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+
+<!doctype html>
+<html lang="eng">
+
+<head>
+	
+	<title>Dasboard - Dossier</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fontawesome/css/all.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fontawesome/js/all.min.js')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/carousel.css')}}">
+	<style type="text/css">
+
+	body{
+		background-color: black;
+		font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-size: 16px;
+	}
+
+	a:hover{
+		background-color: rgb(10, 10, 160);
+		
+	}
+
+  .navbar{
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+
+
+	</style>
+
+</head>
+<body>
+<header>
+<div class="container-fluid">
+<div class="row">
+<nav class="navbar navbar-expand-md" style="background-color: rgb(4, 4, 121);">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-white" href="/">DOSSIER</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/report">REPORT</a>
+        </li>
+        <li class="nav-item">
+        </li>
+      </ul>
+      <form class="" role="search">
+        <a class="btn btn-outline-light" href="/stafflogout" onclick="return confirm('You\'re about to log out, click okay to continue')">Log out</a>
+      </form>
+    </div>
+  </div>
+</nav>
+</div>
+</div>
+</header>
+<main>
+	<div class="container-fluid mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md my-2" style="background-color: black; color: white; min-height: 10px;">
+          <h4>Welcome {{ staff.employee_fullname }}</h4>
+      </div>
+      <div class="col-md my-2 text-end" style="background-color: black; color: white; min-height: 10px;">
+                {% if session['office'] == 3: %}         
+                    {% if total|count < 1: %}
+          <small class="">There is currently no report related to you. Maintain your good reputation</small>
+                    {% elif total|count == 1 : %}
+          <small class="animate__animated animate__flash animate__repeat-2">There is {{ total|count }} report related to you </small>
+                    {% else: %}
+          <small class="animate__animated animate__flash animate__repeat-2">There are total of {{ total|count }} reports related to you </small>
+                    {% endif %} {% endif %}                  
+       </div>     
+			<div class="row border-bottom border-dark">
+          <div class="col-md-1 rounded-2 pt-4" style="background-color: rgb(224, 224, 224); height: 60px;">
+              <h6 class="fw-bolder">S/N</h6>
+          </div>
+          <div class="col-md-2 rounded-2 pt-4" style="background-color: rgb(224, 224, 224); height: 60px;">
+              <h6 class="fw-bolder">Details</h6>
+          </div>
+          <div class="col-md rounded-2 pt-4 px-5" style="background-color: rgb(224, 224, 224); height: 60px;">
+              <h6 class="fw-bolder">Message</h6>
+          </div>
+      </div>
+          {% for report in reports: %}
+      <div class="row border-bottom border-dark">              
+          <div class="col-md-1 pt-3 rounded-2" style="background-color: rgb(224, 224, 224); height: 140px; overflow: scroll;">
+                {{ loop.index }}.
+          </div>
+          <div class="col-md-2 rounded-2 pt-3" style="background-color: rgb(224, 224, 224); height: 140px; overflow: scroll">
+              <h6>From: <span><small><b>Management</b></small></span></h6>
+              <h6>Name: <span><small><b>{{ report.employee_rel.employee_fullname }}</b></small></span></h6>
+              <h6>Department: <span><small><b>{{ report.dept_rel.dept_name }}</b></small></span></h6>
+              <h6>Date: <span><small><b>{{ report.report_date }}</b></small></span></h6>
+          </div>
+          <div class="col-md rounded-2 pt-3 px-5" style="background-color: rgb(224, 224, 224); height: 140px; overflow: scroll">
+              <small>{{ report.report_msg }}</small>
+          </div>
+      </div>
+                    {% endfor %}         
+			</div>
+			</div>
+</main>
+
+<div class="row mt-5" >
+<footer class="footer mt-auto py-3 bg-dark text-center" style="position: fixed; left: 0px; bottom: 0px;">
+<div class="container">
+<span class="text-white"> DOSSIER | SevenLives Inc. &copy;2022</span>
+	</div>
+</footer>	
+
+<!--<script src = "main.js" type="text/javascript"></script>-->
+<script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" language="javascript">			
+</script> 
+</body>
+</html>
+

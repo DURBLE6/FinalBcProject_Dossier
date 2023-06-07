@@ -1,0 +1,159 @@
+
+<!doctype html>
+<html lang="eng">
+
+<head>
+	
+	<title>Report - Dossier</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fontawesome/js/all.min.js')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/carousel.css')}}">
+	<style type="text/css">
+
+	body{
+		background-color: black;
+		font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-size: 16px;
+	}
+	a:hover{
+		background-color: rgb(10, 10, 160);
+
+	}	
+	::-webkit-scrollbar {
+  		width: 0px;
+	
+	}
+	.navbar{
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+	</style>
+
+</head>
+<body>
+<header>
+<div class="container-fluid">
+<div class="row">
+<nav class="navbar mb-3 navbar-expand-md" style="background-color: rgb(4, 4, 121);">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-white" href="/" onclick="return confirm('Unsubmitted report will not be saved, do you want to leave the report page?')">DOSSIER</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="/staffdashboard" onclick="return confirm('Unsubmitted report will not be saved, do you want to leave the report page?')">DASHBORD</a>
+        </li>
+        <li class="nav-item">
+        </li>
+      </ul>
+      <form class="" role="search">
+        <a class="btn btn-outline-light" href="/stafflogout" onclick="return confirm('You\'re about to log out, click okay to continue')">Log out</a>
+      </form>
+    </div>
+  </div>
+</nav>
+</div>
+</div>
+</header>
+<main>
+	<div class="container-fluid mt-5">
+		<div class="row text-light justify-content-center">
+			<div class="col-md"  style="height: 25px;">
+				<small>Name: {{ getid.employee_fullname.upper()}}<br>
+				Office: {{ getid.office_rel.office_name.upper()}}<br>
+				Department: {{ getid.dept_rel.dept_name.upper()}}</small> 
+			</div>
+			<div class="col-md-3 text-center" style="height: 25px;">
+				{% with msg = get_flashed_messages(with_categories = True) %} {% if msg: %} {% for cat,m in msg: %}
+                {% if cat == 'error': %} <div class="badge bg-danger">{{ m|safe}}</div>
+                {% elif cat == 'success': %} <div class="badge bg-success">{{ m|safe}}</div> {% else: %}
+                <div class="badge bg-warning">{{ m|safe}}</div> {% endif %}{% endfor %}
+                                    {% endif %} {% endwith %}
+			</div>
+			<div class="col-md pt-3" style="height: 25px;">
+				<h6 class="text-end" id="date"></h6>
+				<h6 class="text-end" id="time"></h6>
+			</div>
+		</div>
+		<div class="row mt-5 justify-content-around">
+			<div class="col-md-8 rounded-2 border-end px-5" style="background-color: rgb(235,235,235);">
+						<p><form method="post" action="">
+							<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
+							<p class="">Please select the appropriate details and enter your message below </p>
+							<hr style="width: 600px;"> 
+							<p class=""><select class="" name="workers" style="height: 30px; width: 200px;">
+								<option><b>Staff Name:</b></option>
+								{% for staff in workers: %}
+								<option value="{{ staff.employee_id }}">{{ staff.employee_fullname }}</option>
+								{% endfor %}
+							</select> 
+							<select class="" name="depts" style="height: 30px; width: 200px;">
+								<option><b>Departments:</b></option>
+								{% for d in depts: %}
+								<option value="{{ d.dept_id }}" selected>{{ d.dept_name }}</option>
+								{% endfor %}
+							</select> 
+							{% if session['office'] == 3 %}
+							<select class="" name="offices" style="height: 30px; width: 200px;">
+								<option><b>Office:</b></option>
+								{% for o in mgt: %}
+								<option value="{{ o.office_id }}">{{ o.office_name }}</option>
+								{% endfor %}
+							 </select> </p>
+							{% endif %}
+							<p class=""><b> Enter your message below: </b></p>
+							<p><textarea class="text-area text-center border-dark mb-1 rounded-3" id="" placeholder="Write here...." name="report" style="width:90%" rows="10"></textarea></p>
+							<button type="submit" class="btn btn-primary text-white mb-2 offset-4" style="width:80px; border-radius: 7px;">submit</button>
+						</form>
+					</div>
+					<div class="col-md-4 rounded-2" style="background-color: rgb(235, 235, 235); overflow: scroll;">
+						<p class="text-center pt-3">Recently submitted reports</p><hr>
+							{% if reports: %}
+								{% for msg in reports: %}
+								{% if msg.report_status == '1' %}
+								<p><small class="badge bg-success">Your message on {{msg.report_date}} has been received,<br> the matter will be attended to with immediate effect</small></p>
+								{% elif msg.report_status == '0' %}
+								<p><small class="badge bg-warning">Your message on {{msg.report_date}} is pending,<br> a notification will be displayed here upon acknoledgement.</small></p>
+								{% endif %}
+								{% endfor %}
+							{% else: %}
+								<p><small>You currently do not have any report. The status of your submitted reports will appear here </small></p>
+							{% endif %}
+					</div>
+					<div class="row justify-content-around" style="background-color: black; color: white;">
+						<div class="col-md pt-2"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+</main>
+
+<div class="row mt-5" >
+<footer class="footer mt-auto py-3 bg-dark text-center" style="position: fixed; left: 0px; bottom: 0px;">
+<div class="container">
+<span class="text-white">DOSSIER | SevenLives Inc. &copy;2022</span>
+	</div>
+</footer>	
+
+<!--<script src = "main.js" type="text/javascript"></script>-->
+<script src="{{url_for('static',filename='bootstrap/js/bootstrap.bundle.min.js')}}" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" language="javascript">
+	function timeUpdate(){
+		var current = new Date();
+		var date = current.toDateString();
+		var time = current.toLocaleTimeString();
+		document.getElementById('date').innerHTML = date;
+		document.getElementById('time').innerHTML = time;
+}
+	setInterval(timeUpdate,1000)		
+</script> 
+</body>
+</html>

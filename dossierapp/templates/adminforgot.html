@@ -1,0 +1,101 @@
+
+<!doctype html>
+<html lang="eng">
+
+<head>
+	
+	<title>Admin Reset - Dosier</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/js/all.min.js')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/animate.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/carousel.css')}}">
+	<style type="text/css">
+  body {
+        background-color: rgb(235, 235, 235);   
+}
+
+
+
+	/* body{
+		background-color: white;
+		font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-size: 16px;
+	} */
+	a:hover{
+		background-color: rgb(51, 48, 48);
+		
+	}
+
+	</style>
+
+</head>
+<body>
+<header>
+<div class="container-fluid">
+<div class="row">
+<div class="col-md">
+<nav class="navbar navbar-expand-md" style="background-color: black;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+		  <a class="nav-link active text-white" aria-current="page" href="{{url_for('adminlogin')}}">DOSSIER</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</div>
+</div>
+</header>
+<main>
+	<div class="container-fluid">
+		<div class="row mt-5 justify-content-center"> 
+			<div class="col-md-9 p-5 rounded-2" style="background-color: black;">
+			<div class="row justify-content-center">
+				<div class="col-md-6 border border-light rounded-2 text-center pt-4" style="overflow: scroll; background-color: black; color: whitesmoke; height: 380px;">
+					<main class="form-signin" id="signUpForm">
+              			<form method="post" action="">
+							<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
+                  				<h1 class="mb-5 fs-5 text-center">Password Reset</h1>
+                   				 <small>Please enter your registered admin email below, a link will be sent to the mail.Follow the instructions in the mail to reset your password</small> 
+									{% with msg = get_flashed_messages(with_categories = True) %} {% if msg: %}
+									{% for cat,m in msg: %} {% if cat == 'error': %}
+										<div class="badge bg-danger mt-2">{{ m|safe}}</div>
+										{% elif cat == 'success': %} <div class="badge bg-success mt-2">{{ m|safe}}</div>
+										{% else: %} <div class="badge bg-warning mt-2">{{ m|safe}}</div>
+										{% endif %} {% endfor %} {% endif %}
+													{% endwith %}
+										<div class="form-floating text-dark mt-3">
+										<input type="email" name="email" class="form-control mb-1" style=" height:50px;" id="floatingMail" placeholder="name@example.com" required>
+										<label for="floatingInput">Email address</label>
+										</div>
+										<button class="w-25 btn btn-outline-light mt-3" type="submit" href="#">Send Link</button>
+              					</form>
+            				</main>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<div class="row mt-5" >
+<footer class="footer mt-auto py-3 bg-dark text-center" style="position: fixed; left: 0px; bottom: 0px;">
+<div class="container">
+<span class="text-white"> DOSSIER | SevenLives Inc. &copy;2022</span>
+	</div>
+</footer>	
+<!--<script src = "main.js" type="text/javascript"></script>-->
+	<script src="jquery.min.js" type="text/javascript" language="javascript"></script>
+	<script type="text/javascript" language="javascript">
+	</script>
+</body>
+</html>					

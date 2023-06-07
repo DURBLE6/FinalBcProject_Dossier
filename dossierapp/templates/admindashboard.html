@@ -1,0 +1,241 @@
+
+<!doctype html>
+<html lang="eng">
+
+<head>
+	<!-- /management/report/approve/id=mgtreports[0] -->
+	<title>Admin Dashboard - Dossier</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fontawesome/css/all.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/carousel.css')}}">
+	<style type="text/css">
+
+	body{
+		background-color:black;
+        color: rgb(241, 240, 238);
+		font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-size: 16px;
+	}
+	a:hover{
+		background-color: skyblue;
+		color: blue;
+	}
+
+    .header{
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+
+	</style>
+
+</head>
+<body>
+
+	<header class="p-3 bg-dark text-white col-md-12 header" style="z-index: 1;">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">             
+                </a>
+                <div class="nav col-12 col-lg-auto me-lg-auto mb-2  mb-md-0">
+                    <li class="nav-link border-end border-light fw-bold text-light"><h4>D a s h b o a r d</h4></li>
+                </div>
+                <div class="text-end">
+                    <a class="btn btn-outline-light" href="/adminlogout" onclick="return confirm('You\'re about to log out, click okay to continue')">Log out</a>
+                </div>
+            </div>	
+        </div>
+  </header>
+	<div class="container-fluid mt-5">
+		<div class="row pt-5 mb-2">	
+		    <div class="col-md pt-4 px-5">
+                <h5>Welcome, {{ adminquery.admin_fullname }}</h5>	
+            </div>
+		</div>
+		
+		<!-- <div class="container-fluid"> -->
+				<div class="row mt-3 px-2 py-2 rounded-3">	
+                    <div class="col-md p-1"> 
+                       <p>Table: <select name="table" class="" id="show" style="width: 177px; height: 31px;">
+                            <option value="Management">Management Table</option>
+                            <option value="Staff">Staff table</option>
+                            <option value="All" selected>All Tables</option>
+                            <option value="None">None</option>
+                        </select>
+                        <button type="submit" id="showBtn" class="btn btn-light btn-sm">select</button></p>
+				    </div>
+		    </div>	
+		    <div class="row px-2 py-2 rounded-3 animate__animated animate__zoomIn" id="mgtTable">
+                <div class=" col-md p-2 bg-white rounded table-responsive-md ">
+                    <p class="text-center text-dark">MANAGEMENT REPORT TABLE</p>
+                        <table class="table table-striped table-hover   ">
+                            <thead class="">
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Report Message</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Acknoledgement</th>
+                                </tr>
+                            </thead>
+                            <tbody class="">
+                                {% for msg in mgtreports %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ msg.report_msg }}<span><small><i style="color:rgb(6, 6, 190);"> -{{ msg.office_rel.office_name }}</i></small></span></td>
+                                        <td>{{ msg.employee_rel.employee_fullname }}</td>
+                                        <td>{{ msg.dept_rel.dept_name }}</td>
+                                        <td>{{ msg.report_date }}</td>
+                                        <td id="status">
+                                            {% if msg.report_status == '0': %}
+                                            <div class="badge bg-dark">pending</div> 
+                                            {% else: %}
+                                            <div class="badge bg-success">approved</div>
+                                            {% endif %}
+                                        </td>
+                                        <td> 
+                                            <form id="mgtForm-{{ msg.report_id }}" action="/management/report/approve/id=mgtreports[0]" method="post">
+                                            <input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
+                                            <input type="hidden" name="reportid" id="mgtReportId" value="{{ msg.report_id }}">
+                                            <p>
+                                                <select name="stat" id="mgtStatus" class="col-6"> 
+                                                <option selected>select</option>
+                                                <option value="1">approve</option>
+                                                <option value="0">ignore</option>
+                                                </select>
+                                                 <button type="submit" id="mgtBtn" class="btn btn-outline-dark btn-sm" style="height: 25px; padding-bottom: 0px;">Done</button></p>
+                                            </form>
+                                        </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+				</div>
+		</div>	
+        <div class="row px-2 py-2 border border-dark rounded-3 animate__animated animate__backInUp" id="staffTable">	
+				<div class="col-md p-2 bg-white rounded  table-responsive-md"> 
+                    <p class="text-center text-dark">STAFF REPORT TABLE</p>
+                        <table class="table table-striped table-hover">
+                            <thead class="">
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Report Message</th>
+                                    <th>Office</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Aknoledgement</th>
+                                </tr>
+                            </thead>
+                            <tbody class="">
+                                {% for msg in staffreports: %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ msg.report_msg }}<span><small><i style="color:rgb(6, 6, 190);"> -{{ msg.employee_rel.employee_fullname }}</i></small></span></td>
+                                    <td>{{ msg.office_rel.office_name }}</td>
+                                    <td>{{ msg.employee_rel_2.employee_fullname }}</td>
+                                    <td>{{ msg.dept_rel.dept_name }}</td>
+                                    <td>{{ msg.report_date }}</td>
+                                    <td>
+                                        {% if msg.report_status == '0': %}
+                                            <div class="badge bg-dark">pending</div> 
+                                        {% else: %}
+                                            <div class="badge bg-success">Acknoledged</div> 
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        <form action="/staff/report/approve/id=staffreports[0]" method="post">
+                                            <input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
+                                            <input type="hidden" name="reportid" value="{{ msg.report_id }}">
+                                           <p><select name="stat" class="col-6" id="staffStatus">
+                                                <option selected>select</option>
+                                                <option value="1">acknoledge</option>
+                                                <option value="0">ignore</option>
+                                            </select>
+                                           <button type="submit" class="btn btn-outline-dark btn-sm" id="staffBtn" style="height: 25px; padding-bottom: 0px;">Done</button></p>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+				</div>
+                                
+		</div>
+				<div class="row mt-5" >
+					<footer class="footer mt-auto py-3 bg-dark text-center" style="position: fixed; left: 0px; bottom: 0px;">
+						<div class="container">
+							<span class="text-white"> DOSSIER | SevenLives Inc. &copy;2022</span>
+						</div>
+					</footer>	
+					<!-- <div class="col-md-4" style="border-right:1px solid white;"> -->
+				</div>	
+		</div>
+	</div>
+    <script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static',filename='fontawesome/js/all.min.js')}}"></script>
+	<script src="{{url_for('static', filename='jquery.min.js')}}" type="text/javascript" language="javascript"></script>
+	<script type="text/javascript" language="javascript">
+	$(document).ready(function(){
+        $('#showBtn').click(function(){
+            var selected = $('#show').val()
+            if( selected == 'Management'){
+                $('#mgtTable').show()
+                $('#staffTable').hide()
+            }else if( selected == 'Staff'){
+                $('#mgtTable').hide()
+                $('#staffTable').show()
+            }else if( selected == 'None'){
+                $('#mgtTable').hide()
+                $('#staffTable').hide()
+            }else{
+                $('#mgtTable').show()
+                $('#staffTable').show()
+            }
+
+        })
+        
+        $('#staffBtn, #mgtBtn').prop('disabled', true);
+            var dropdown = $(this).val()
+                $('#staffStatus, #mgtStatus').change(function(){
+                    if($(this).text() != 'select'){
+                    $('#staffBtn, #mgtBtn').prop('disabled', false)
+
+                }else{
+                     $('#staffBtn, #mgtBtn').prop('disabled', true)
+                }
+         })
+            $('#mgtBtn').click(function(){
+            var status = $('#mgtStatus').val()
+            var report = $('#mgtReporttId').val()
+            var csrf = "{{'csrf_token()'}}"
+            var toSend = {"status":status, "report":report, "csrf":csrf}
+            $.ajax({
+            url:"/management/report/approve",
+            data: toSend,
+            type: "POST",
+            dataType: "text",
+            success:function(resp){
+                console.log(resp)
+                
+            },
+            error:function(e){
+                console.log(e)
+            }
+        })
+        });
+
+    });				
+	</script>
+</body>
+</html>

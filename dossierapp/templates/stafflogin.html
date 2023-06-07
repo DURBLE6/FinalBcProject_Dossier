@@ -1,0 +1,75 @@
+								{% extends "layout.html" %}	
+                                {% block logout %}
+                                {% endblock %}
+								{% block stafflogin%}
+				<div class="col-md rounded-2 pt-4" style="overflow: scroll; background-color: rgb(224, 224, 224); height: 380px;">
+					<p class="text-center"><b> PLEASE KEEP IN MIND AS YOU USE THE PLATFORM </b></p><hr>
+						<ul>
+              <small>
+                  <li>When making reports, let your message be brief and as basic as possible</li>
+                  <li>Kindly avoid vulgar words or any abusive word </li>
+                  <li>Do not resend the same message multiple times, you may need to refresh the page if your report was not submitted at initial attempt</li>
+                  <li>The notification of the status of a user's report appears in the right panel of the page </li>
+                  <li>Report that does not relate to the activities of the organisation and/or violate the terms and conditions for reports will be completely ignored</li>
+              </small>
+            </ul>
+							<small>Please register <b><a style="font-style: italic; text-decoration: none;" href="/staffregister" >HERE</a></b> if you don't have an accout yet. Note that this is mandatory for all the staffs </small>
+				</div>
+					<div class="col-md rounded-2 pt-5 px-5" style="background-color: rgb(4, 4, 121);  height: 380px; color: white;">
+						 <main class="form-signin" id="signUpForm">
+                            <form method="post" action="">
+                                <input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
+                                <h1 class="mb-5 fs-5 text-center">Staff Login</h1>
+                                    {% with msg = get_flashed_messages(with_categories = True) %} {% if msg: %}
+                                    {% for cat,m in msg: %} {% if cat == 'error': %} <div class="badge bg-danger mb-4">{{ m|safe}}</div>
+                                    {% elif cat == 'success': %} <div class="badge bg-success mb-4  text-center">{{ m|safe}}</div>
+                                    {% else: %} <div class="badge bg-warning mb-4  text-center">{{ m|safe}}</div>
+                                    {% endif %} {% endfor %} {% endif %}
+                                        {% endwith %}
+                                <div class="form-floating text-dark">
+                                    <input type="email" name="email" class="form-control mb-1" style="color: black; height:50px;" id="floatingMail" placeholder="name@example.com" required>
+                                    <label for="floatingInput">Email address</label>
+                                </div>
+                                <div class="form-floating text-dark">
+                                    <input type="password" name="pwd" class="form-control mb-1" style="height:50px;" id="password" placeholder="Password" required>
+                                    <label for="floatingPassword">Password</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 form-group text-primary">
+                                      <input type="checkbox" id="showPassword">
+                                      <label for="showPassword">show password</label>
+                                    </div>
+                                    <div class="col-md-6 form-group text-primary d-flex justify-content-end"> 
+                                        {% if session['staff']: %}
+                                      <a href="#" class="" onclick="return alert('Cannot be processed during active session')"> forgot password?</a>
+                                        {% else%}
+                                      <a href="{{url_for('forgotpassword')}}" class=""> forgot password?</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                    {% if session['staff']: %}
+                                <a class="btn btn-primary offset-4 mt-3 col-5" type="button" href="{{url_for('stafflogout')}}" onclick="return confirm('A User is logged in, do you want to sign out existing user and sign in? Click okay to continue')">Login</a>
+                                  {% else%}
+                                <button class="btn btn-primary offset-4 mt-3 col-5" type="submit">Login</button>
+                                {% endif %}
+                            </form>
+                        </main>
+					</div>
+<script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+<script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" language="javascript">
+  $(document).ready(function(){
+    $('#password').attr('type', 'password');
+    $('#showPassword').click(function(){
+      if ($(this).is(':checked')){
+        $('#password').attr('type', 'text');
+      }else{
+        $('#password').attr('type', 'password');
+      }
+    })   
+  })
+</script>	
+									{% endblock %}
+				
+
+					

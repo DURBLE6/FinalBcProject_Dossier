@@ -1,0 +1,125 @@
+
+<!doctype html>
+<html lang="eng">
+
+<head>
+	
+	<title>Password Reset - Dossier</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/js/all.min.js')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/animate.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/carousel.css')}}">
+	<style type="text/css">
+  body {
+        background-color: black;    
+}
+
+
+
+	/* body{
+		background-color: white;
+		font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-size: 16px;
+	} */
+	a:hover{
+		background-color: rgb(10, 10, 160);
+		
+	}
+  .navbar{
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+</style>
+</head>
+<body>
+  <header>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="navbar navbar-expand-md" style="background-color: rgb(4, 4, 121);">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <li class="navbar-brand text-white">ADMIN AREA</li>
+              <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+		                <li class="nav-link active text-white" aria-current="page">
+			                R e g i s t ra t i o n  P a g e
+                    </li>
+                </ul>
+              </div>
+          </div>
+        </nav>
+      </div>
+  </header>
+  <main>
+	<div class="container-fluid mt-5">
+		<div class="row pt-4 justify-content-center"> 		
+					<div class="col-md-6 bg-white rounded-2 pt-5 px-5">
+							<form method="post" action="">
+                <h1 class="mb-3 fs-5 text-center">Complete the field below to Sign up <br><span><h6>All fields are required</h6></span></h1>
+                  {% with msg = get_flashed_messages(with_categories = True) %}
+                    {% if msg: %} {% for cat,m in msg: %}
+                      {% if cat == 'error': %} <div class="badge bg-danger mb-4">{{ m|safe}}</div>
+                        {% elif cat == 'success': %} <div class="badge bg-success mb-4">{{ m|safe}}</div>
+                          {% else: %} <div class="badge bg-warning mb-4">{{ m|safe}}</div>
+                            {% endif %} {% endfor %}
+                              {% endif %} {% endwith %}
+                                <input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
+                                  <div class="form-floating">
+                                    <input type="text" name="fullname" class="form-control mb-1" id="floatingName" placeholder="FirtName LastName" required>
+                                      <label for="">Full Name</label>
+                                  </div>
+                                  <div class="form-floating">
+                                    <input type="email" name="email" class="form-control mb-1" id="floatingMail" placeholder="name@example.com" required>
+                                    <label for="floatingInput">Email address</label>
+                                  </div>
+                                  <div class="form-floating">
+                                    <input type="password" name="pwd" class="form-control mb-1" id="floatingPassword" placeholder="Password" required>
+                                    <label for="floatingPassword">Password</label>
+                                  </div>
+								                  <small style="color: red;">At least 8 characters long including uppercase, lowercase and numbers</small>
+                                  <div class="form-floating">
+                                    <input type="password" name="confirm_pwd" class="form-control mb-1" id="floatingPassword_2" placeholder="Enter password again" required>
+                                    <label for="floatingPassword">confirm password</label>
+                                  </div>
+                                  <div class="form-floating">
+                                    <input type="text" name="phone" class="form-control mb-2" id="floatingNumber" placeholder="Mobile number" required>
+                                    <label for="floatingInput">Phone Number</label>
+                                  </div>
+                                  <div class="form-floating">
+                                    <input type="address" name="address" class="form-control mb-2" id="floatingNumber" placeholder="address" required>
+                                    <label for="floatingInput">Address</label>
+                                  </div>
+                                  <div class="checkbox mb-3 text-end">
+                                    <label>
+                                      Already have an account? <a href="/admin" style="text-decoration: none;">Login</a> 
+                                    </label>
+                                  </div>
+                                <button class="w-20 mb-3 btn btn-primary offset-4" type="submit" href="#">Register</button>
+                            </form>
+					  </div>
+			    </div>
+			  </div>
+		  </div>
+	  </div>
+  </main>
+<div class="row mt-5" >
+<footer class="footer mt-auto py-3 bg-dark text-center" style="position: fixed; left: 0px; bottom: 0px;">
+<div class="container">
+<span class="text-white"> DOSSIER | SevenLives Inc. &copy;2022</span>
+	</div>
+</footer>	
+
+<!--<script src = "main.js" type="text/javascript"></script>-->
+<script src="jquery.min.js" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" language="javascript">
+</script>
+</body>
+</html>					

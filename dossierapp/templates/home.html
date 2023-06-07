@@ -1,0 +1,122 @@
+
+<!doctype html>
+<html lang="eng">
+
+<head>
+	
+	<title>Welcome - Dossier</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static',filename='fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fontawesome/js/all.min.js')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css')}}">
+	<link rel="stylesheet" type="type/css" href="{{url_for('static', filename='css/carousel.css')}}">
+	<style type="text/css">
+
+	body{
+		background-color: white;
+		font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-size: 16px;
+	}
+	a:hover{
+		background-color: rgb(10, 10, 160);
+		
+	}
+
+	::-webkit-scrollbar {
+  		width: 0px;
+	}
+
+	img{
+		
+  		height: 100%;
+  		width: 102%;
+  		left: 0;
+  		right: 0;
+  		top: 0;
+  		bottom: 0;
+  		margin: auto;
+}
+	</style>
+
+</head>
+<body>
+<header>
+<div class="container-fluid">
+<div class="row">
+<nav class="navbar navbar-expand-md" style="background-color: rgb(4, 4, 121);">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand text-white" href="/">DOSSIER</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+			{% if session['staff']: %}
+          	<a class="nav-link active text-white" aria-current="page" href="/staffdashboard">DASHBORD</a>
+			{% else: %}
+			<a class="nav-link active text-white" aria-current="page" href="#" onclick="return alert('please login to go to the dashboard')">DASHBORD</a>
+			{% endif %}
+        </li>
+        <li class="nav-item">
+			{% if session['staff']: %}
+          	<a class="nav-link text-white" href="/report">REPORT</a>
+			{% else: %}
+			<a class="nav-link text-white" href="#" onclick="return alert('you need to be logged in to make a report')">REPORT</a>
+			{% endif %}
+        </li>
+        <li class="nav-item">
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</div>
+</div>
+</header>
+<main>
+	<div class="container-fluid">
+		<div class="row mt-5 justify-content-center">
+			<div class="col-md-9 p-5 rounded-2" style="background-color: rgb(235, 235, 235); border: rgb(4, 4, 121) 1px solid;">
+			<div class="row">
+				<div class="col-md rounded-2 text-center pt-4" style="overflow: scroll; background-color: rgb(224, 224, 224); height: 380px;">
+						
+					<p><b> ABOUT DOSSIER  </b></p><hr>
+					<small>Dossier is a web application designed for corporate organisations to serve as a tool that helps the top tier employees of an organisation communicate with the management. It allows top officers (Managers, Supervisors, etc) to generate and send a report, typically regarding the ethics and behaviour of an individual worker towards duties and assignments in the organisation. Dossier ensures swift and prompt communications as each message or report will be attended to and the sender gets notified almost immediately</small>
+					<form method="post" action="">
+					<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">					
+					<p><b>Continue as: </b><select class="text-start" id="pick" name="pick" style="width: 170px; height: 32px;">
+						<option value ="New staff" selected>New Member</option>
+						<option value ="Existing staff" >Existing member</option>			
+					</select>
+					<button type="submit" class="mt-3 offset rounded-2" style="background-color: rgb(4, 4, 121); color: white;">continue</button></p>
+					</form></p>
+				</div>
+				
+				<div class="col-md rounded-2 d-flex align-items-center" style="background-color: rgb(224, 224, 224); height: 380px;">
+					<img src="{{url_for('static',filename = '/images/homepage.jpeg')}}">
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+<div class="row mt-5" >
+<footer class="footer mt-auto py-3 bg-dark text-center" style="position: fixed; left: 0px; bottom: 0px;">
+<div class="container">
+<span class="text-white">DOSSIER | SevenLives Inc. &copy;2022</span>
+	</div>
+</footer>	
+
+<!--<script src = "main.js" type="text/javascript"></script>-->
+<script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}" type="text/javascript" language="javascript"></script>
+
+<script type="text/javascript" language="javascript">
+</script> 
+</body>
+</html>
