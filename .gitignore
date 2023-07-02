@@ -1,0 +1,9 @@
+/vdossier
+.vdossier
+/instance
+dossierapp/static
+adminmail.txt
+staffmail.txt
+*.png
+*.mwb
+.DS_Store
