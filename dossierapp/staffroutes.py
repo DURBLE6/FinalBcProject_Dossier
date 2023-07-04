@@ -227,8 +227,9 @@ def report():
             elif session['office'] == 3:
                 workers = Employees.query.filter(Employees.office_id != 3).filter(Employees.dept_id == department).all()
 
+            mgt_report = Managementreport.query.filter(Managementreport.reported_by == staff).all()
             reports = Staffreport.query.filter(Staffreport.reported_by == staff).all()
-            return render_template('report.html', workers = workers, mgt = mgt, depts = depts, getid = getid, reports = reports)
+            return render_template('report.html', workers = workers, mgt = mgt, depts = depts, getid = getid, reports = reports, mgt_report = mgt_report)
         else:            
             text = request.form.get('report')
             about = request.form.get('workers')

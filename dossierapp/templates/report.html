@@ -87,7 +87,7 @@
 			<div class="col-md-8 rounded-2 border-end px-5" style="background-color: rgb(235,235,235);">
 						<p><form method="post" action="">
 							<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
-							<p class="">Please select the appropriate details and enter your message below </p>
+							<p class="">Please complete details and enter your message below </p>
 							<hr style="width: 600px;"> 
 							<p class=""><select class="" name="workers" style="height: 30px; width: 200px;">
 								<option><b>Staff Name:</b></option>
@@ -97,9 +97,7 @@
 							</select> 
 							<select class="" name="depts" style="height: 30px; width: 200px;">
 								<option><b>Departments:</b></option>
-								{% for d in depts: %}
-								<option value="{{ d.dept_id }}" selected>{{ d.dept_name }}</option>
-								{% endfor %}
+								<option value="{{ depts.dept_id }}" selected>{{ depts.dept_name }}</option>
 							</select> 
 							{% if session['office'] == 3 %}
 							<select class="" name="offices" style="height: 30px; width: 200px;">
@@ -116,16 +114,30 @@
 					</div>
 					<div class="col-md-4 rounded-2" style="background-color: rgb(235, 235, 235); overflow: scroll;">
 						<p class="text-center pt-3">Recently submitted reports</p><hr>
-							{% if reports: %}
-								{% for msg in reports: %}
-								{% if msg.report_status == '1' %}
-								<p><small class="badge bg-success">Your message on {{msg.report_date}} has been received,<br> the matter will be attended to with immediate effect</small></p>
-								{% elif msg.report_status == '0' %}
-								<p><small class="badge bg-warning">Your message on {{msg.report_date}} is pending,<br> a notification will be displayed here upon acknoledgement.</small></p>
+
+							{% if reports %}
+								{% if session['office'] == 3 %}
+									{% for msg in reports %}
+										{% if msg.report_status == '1' %}
+											<p><small class="badge bg-success">Your message on {{msg.report_date}} has been received,<br> the matter will be attended to with immediate effect</small></p>
+										{% elif msg.report_status == '0' %}
+											<p><small class="badge bg-warning">Your message on {{msg.report_date}} is pending,<br> a notification will be displayed here upon acknoledgement.</small></p>
+										{% endif %}
+									{% endfor %}
 								{% endif %}
-								{% endfor %}
-							{% else: %}
+							{% elif mgt_report %}
+								{% if session['office'] != 3 %}
+									{% for msg in mgt_report %}
+										{% if msg.report_status == '1' %}
+											<p><small class="badge bg-success">Your message on {{msg.report_date}} has been received,<br> the matter will be attended to with immediate effect</small></p>
+										{% elif msg.report_status == '0' %}
+											<p><small class="badge bg-warning">Your message on {{msg.report_date}} is pending,<br> a notification will be displayed here upon acknoledgement.</small></p>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							{% else %}
 								<p><small>You currently do not have any report. The status of your submitted reports will appear here </small></p>
+								
 							{% endif %}
 					</div>
 					<div class="row justify-content-around" style="background-color: black; color: white;">
