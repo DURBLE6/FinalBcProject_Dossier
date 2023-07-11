@@ -153,11 +153,6 @@ def staffreset():
         newpwd2 = request.form.get('confirm-pwd')
         token = request.form.get('token')
         if token != None and newpwd != "" and newpwd2 != "":
-            # try:
-            #     email = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])['user']
-            # except jwt.exceptions.DecodeError:
-            #     flash('Token not valid')
-            #     return redirect(url_for('staffreset'))
             users = Employees.query.filter(Employees.employee_email == email).first()
             if users:
                 if newpwd == newpwd2:

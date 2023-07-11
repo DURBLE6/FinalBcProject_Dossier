@@ -214,25 +214,6 @@
                 }else{
                      $('#staffBtn, #mgtBtn').prop('disabled', true)
                 }
-         })
-            $('#mgtBtn').click(function(){
-            var status = $('#mgtStatus').val()
-            var report = $('#mgtReporttId').val()
-            var csrf = "{{'csrf_token()'}}"
-            var toSend = {"status":status, "report":report, "csrf":csrf}
-            $.ajax({
-            url:"/management/report/approve",
-            data: toSend,
-            type: "POST",
-            dataType: "text",
-            success:function(resp){
-                console.log(resp)
-                
-            },
-            error:function(e){
-                console.log(e)
-            }
-        })
         });
 
     });				
